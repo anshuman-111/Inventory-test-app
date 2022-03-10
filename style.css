@@ -10,12 +10,21 @@ button{
     font-size: larger;
 }
 
+#confirm-item{
+    font-family: 'Share Tech Mono', 'monospace';
+    padding: 40px;
+    font-size: larger;
+}
+
 #container {
     background-color: black;
     display: block;
     text-align: center;
     justify-content: center;
     opacity: 0.8;
+    width: auto;
+    margin: auto;
+    
     
 }
 
@@ -44,7 +53,7 @@ button{
 
 input{
     margin-left: 30px;
-    width: 40%;
+    width: auto;
     font-family: 'Share Tech Mono', 'monospace';
     font-size: large;
 }
@@ -56,13 +65,22 @@ input{
 }
 
 #message{
-    background-color: brown;
+    background-color: black;
     font-size: larger;
+    transition: ease-in 0.5s;
+    margin: 30px;
+    padding: 10px;
 }
+
 
 
 #lookup-id{
     margin: 40px;
     width: auto;
     font-size: larger;
+}
+
+h1{
+    background-color: black;
+    opacity: 0.7;
 }

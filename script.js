@@ -33,13 +33,7 @@ class ITEMS {
         }
 //setItem is for adding and updating a new item
     setItem(id, itemName, quantity, purPrice, purDate){
-        this.id = id;
-        this.itemName = itemName;
-        this.quantity = quantity;
-        this.purPrice = purPrice;
-        this.sellPrice = 0;
-        this.purDate = purDate;
-        this.sellDate = "--/--/--"
+    
         const itemObject = { 
             ID: id,
             NAME: itemName,
@@ -64,6 +58,9 @@ const setItem = document.getElementById("set-item")
 const setItemBtn = document.getElementById("set-item-div") 
 const btnContainer = document.getElementById("btn-container")
 const containerDiv = document.getElementById("form-render")
+const msgContainer = document.getElementById("message")
+msgContainer.style.display = "none";
+
  
 
 
@@ -78,12 +75,15 @@ getItem.addEventListener("click", function(){
     itemsList = JSON.parse(localStorage.getItem("items-list"))
     let lookupInputId = IdLookup.value
     let ItemDet = newItem.getItem(itemsList, lookupInputId) 
+    msgContainer.style.display = "block"
     // if item ID is not undefined then...
-    if(ItemDet.ID){
-    container.innerHTML = `ITEM ID: ${ItemDet.ID} </br>  ITEM NAME: ${ItemDet.NAME} </br> ITEM QUANTITY: ${ItemDet.QTY} </br> PURCHASE DATE: ${ItemDet.PURCHASE_DATE}`;
+    if(ItemDet.ID && itemsList!=[]){
+    
+    msgContainer.innerHTML = `ITEM ID: ${ItemDet.ID} </br>  ITEM NAME: ${ItemDet.NAME} </br> ITEM QUANTITY: ${ItemDet.QTY} </br> PURCHASE DATE: ${ItemDet.PURCHASE_DATE}`;
     return true
 } else {
-    container.innerHTML = "Incorrect ID or Item does not exist";
+    msgContainer.style.background = "brown";
+    msgContainer.innerHTML = "Incorrect ID or Item does not exist";
     return false
 }
 })
@@ -101,15 +101,19 @@ function hideElementAddItemMode(){
 
 // Rendering the Add Item Form
 function renderForm(){
+    msgContainer.style.display = "none";
     containerDiv.innerHTML  = `
-    ITEM ID: <input type="number" class="form-input" name="itemID" id="item-id" required>
-    ITEM NAME: <input type="text" class="form-input" name="itemName" id="item-name" required>
-    QUANTITY: <input type="number" class="form-input" name="quantity" id="item-qty" required>
-    PURCHASE PRICE PER UNIT: <input type="number" name="purPrice"  class="form-input" id="purchase-price" required>
-    PURCHASE DATE: <input type="date" class="form-input" name="purchDate" id="purchase-date" required>
-    <button id="confirm-item" class="form-btn">CONFIRM ITEM DETAILS</button>
+    <h1>ENTER ITEM DETAILS</h1>
+    <form action="submission.html" autocomplete="off">
+    <label for="item-id">ITEM ID:</label><input type="number" class="form-input" name="itemID" id="item-id" required><br/>
+    <label for="item-name">ITEM NAME:</label><input type="text" class="form-input" name="itemName" id="item-name" required><br/>
+    <label for="item-qty">QUANTITY:</label> <input type="number" class="form-input" name="quantity" id="item-qty" required><br/>
+    <label for="purchase-price">PURCHASE PRICE PER UNIT:</label><input type="number" name="purPrice"  class="form-input" id="purchase-price" required><br/>
+    <label for="purchase-date">PURCHASE DATE:</label><input type="date" class="form-input" name="purchDate" id="purchase-date" required><br/>
+    <input id="confirm-item" class="form-btn" name="confirm" value="CONFIRM ITEM DETAILS" type="submit">
     <button id="back-btn" class="form-btn" onclick="unhideElements()">GO BACK</button>
-    </br></br><div id="display-after-add"></div>`
+    </br></br><div id="display-after-add"></div>
+    </form>`
 }
 
 // Unhiding Elements 
@@ -125,13 +129,29 @@ function unhideElements(){
     container.style.display = "block"
 }
 
+
+
+
+
 // Adding an event listener to the ADD ITEM button
 setItem.addEventListener("click", function(){
+    
     hideElementAddItemMode() //hides the other buttons 
     renderForm() // Renders the form
+    document.getElementById("confirm-item").disabled = true;
+    const inputFields = document.querySelectorAll("input");
+    const validInputs = Array.from(inputFields)
+    
+    for(let i=0; i<validInputs.length; i++){
+        if(validInputs[i]!==""){
+            document.getElementById("confirm-item").disabled = false;
+        }
+    }
+    
 
     document.getElementById("confirm-item").addEventListener("click", function(){
 
+        
         // Set all values
         const itemId = document.getElementById("item-id").value
         const itemName = document.getElementById("item-name").value
@@ -139,6 +159,7 @@ setItem.addEventListener("click", function(){
         const purPrice = document.getElementById("purchase-price").value
         const purDate = document.getElementById("purchase-date").value
         const displayAfterAdd = document.getElementById("display-after-add")
+
 
         // Set the globally assigned newItem object
         const itemObject = newItem.setItem(itemId, itemName, quantity, purPrice, purDate)
@@ -165,6 +186,9 @@ setItem.addEventListener("click", function(){
 
         console.log(itemObject)
         console.log(JSON.parse(localStorage.getItem("items-list")))
+        
 })
     
 })
+
+document.getElementById("list").innerHTML = localStorage.getItem("items-list")

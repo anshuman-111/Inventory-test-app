@@ -4,23 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <title>Inventory System</title>
 </head>
 <body>
+    <div id="container">
     <div id="lookup">
     ITEM LOOKUP BY ID: <input type="number" id="lookup-id">
+    <br>
+    <br>
+    <br>
+    <div id="get-item-div">
+        <button id="get-item">LOOKUP ITEM</button>
+    </div>
 </div>
-        <div id="get-item-div">
-            <button id="get-item">LOOKUP ITEM</button>
-        </div>
+<br>
+<br>
+<br>
+<br>
+
+        
         <div id="set-item-div">
             <button id="set-item">ADD ITEM</button>
         </div>
+        <br>
     <div id="cont"></div>
+    <br>
     <div id="form-render"></div>
-    
+</div>
 
+<div id="message"></div>
+
+<a href="items-list.html"><button id="show-list">SHOW ITEMS LIST</button></a>
 
 </body>
 <script src="script.js"></script>
